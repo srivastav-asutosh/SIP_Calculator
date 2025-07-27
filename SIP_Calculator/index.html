@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIP Calculator Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="header-title">SIP Calculator</h1>
+                <div class="header-controls">
+                    <div class="mode-toggle">
+                        <button class="mode-btn active" data-mode="sip">SIP</button>
+                        <button class="mode-btn" data-mode="lumpsum">Lumpsum</button>
+                    </div>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard -->
+        <main class="dashboard">
+            <!-- Input Section -->
+            <section class="input-section">
+                <div class="card input-card">
+                    <h2 class="card-title">Investment Details</h2>
+                    
+                    <!-- Monthly Investment Slider -->
+                    <div class="slider-group">
+                        <label class="slider-label">
+                            <span class="label-text" id="investmentLabel">Monthly Investment</span>
+                            <span class="label-value" id="investmentValue">₹25,000</span>
+                        </label>
+                        <div class="input-controls">
+                            <div class="slider-container">
+                                <input type="range" id="monthlyInvestment" class="slider" 
+                                       min="500" max="100000" step="500" value="25000">
+                                <div class="slider-track"></div>
+                            </div>
+                            <div class="input-field-container">
+                                <input type="text" id="monthlyInvestmentInput" class="form-control input-field" 
+                                       value="25000" placeholder="Enter amount">
+                            </div>
+                        </div>
+                        <div class="slider-limits">
+                            <span>₹500</span>
+                            <span>₹1,00,000</span>
+                        </div>
+                    </div>
+
+                    <!-- Expected Return Slider -->
+                    <div class="slider-group">
+                        <label class="slider-label">
+                            <span class="label-text">Expected Return (p.a.)</span>
+                            <span class="label-value" id="returnValue">12%</span>
+                        </label>
+                        <div class="input-controls">
+                            <div class="slider-container">
+                                <input type="range" id="expectedReturn" class="slider" 
+                                       min="1" max="25" step="0.5" value="12">
+                                <div class="slider-track"></div>
+                            </div>
+                            <div class="input-field-container">
+                                <input type="text" id="expectedReturnInput" class="form-control input-field" 
+                                       value="12" placeholder="Enter return %">
+                            </div>
+                        </div>
+                        <div class="slider-limits">
+                            <span>1%</span>
+                            <span>25%</span>
+                        </div>
+                    </div>
+
+                    <!-- Time Period Slider -->
+                    <div class="slider-group">
+                        <label class="slider-label">
+                            <span class="label-text">Time Period</span>
+                            <span class="label-value" id="periodValue">10 Years</span>
+                        </label>
+                        <div class="input-controls">
+                            <div class="slider-container">
+                                <input type="range" id="timePeriod" class="slider" 
+                                       min="1" max="50" step="1" value="10">
+                                <div class="slider-track"></div>
+                            </div>
+                            <div class="input-field-container">
+                                <input type="text" id="timePeriodInput" class="form-control input-field" 
+                                       value="10" placeholder="Enter years">
+                            </div>
+                        </div>
+                        <div class="slider-limits">
+                            <span>1 Year</span>
+                            <span>50 Years</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section">
+                <div class="results-grid">
+                    <div class="card result-card">
+                        <div class="result-icon">💰</div>
+                        <div class="result-content">
+                            <h3 class="result-title">Total Invested</h3>
+                            <p class="result-amount" id="totalInvested">₹30,00,000</p>
+                            <p class="result-subtitle">Your contributions</p>
+                        </div>
+                    </div>
+
+                    <div class="card result-card">
+                        <div class="result-icon">📈</div>
+                        <div class="result-content">
+                            <h3 class="result-title">Estimated Returns</h3>
+                            <p class="result-amount" id="estimatedReturns">₹26,00,897</p>
+                            <p class="result-subtitle">Wealth gained</p>
+                        </div>
+                    </div>
+
+                    <div class="card result-card primary">
+                        <div class="result-icon">🎯</div>
+                        <div class="result-content">
+                            <h3 class="result-title">Total Value</h3>
+                            <p class="result-amount" id="totalValue">₹56,00,897</p>
+                            <p class="result-subtitle">Final corpus</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chart Section -->
+            <section class="chart-section">
+                <div class="card chart-card">
+                    <h2 class="card-title">Investment Breakdown</h2>
+                    <div class="chart-container" style="position: relative; height: 300px;">
+                        <canvas id="investmentChart"></canvas>
+                    </div>
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #1FB8CD;"></div>
+                            <span>Total Invested</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #FFC185;"></div>
+                            <span>Estimated Returns</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Action Section -->
+            <section class="action-section">
+                <button class="btn btn--primary btn--lg invest-btn">
+                    <span class="btn-text">INVEST NOW</span>
+                    <span class="btn-icon">🚀</span>
+                </button>
+                <p class="disclaimer">
+                    *Returns are indicative and subject to market risks. Past performance doesn't guarantee future returns.
+                </p>
+            </section>
+
+            <!-- Additional Information -->
+            <section class="info-section">
+                <div class="card info-card">
+                    <h3 class="info-title">Why Choose SIP?</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-icon">⚡</div>
+                            <div class="info-content">
+                                <h4>Power of Compounding</h4>
+                                <p>Your returns generate their own returns over time</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">📊</div>
+                            <div class="info-content">
+                                <h4>Rupee Cost Averaging</h4>
+                                <p>Reduces impact of market volatility on investments</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">🎯</div>
+                            <div class="info-content">
+                                <h4>Disciplined Investing</h4>
+                                <p>Automate your investments for better financial planning</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Loading Indicator -->
+        <div class="loading-indicator hidden" id="loadingIndicator">
+            <div class="loading-spinner"></div>
+            <p>Calculating...</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
