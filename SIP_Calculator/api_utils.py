@@ -175,7 +175,7 @@ def log_calculation(calculation_data, result_data, user_id=None, session_id=None
         session_id (str, optional): Session ID for anonymous users
     """
     try:
-        from models import db, SICalculation
+        from models import db, SIPCalculation
 
         calculation = SIPCalculation(
             user_id=user_id,
