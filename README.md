@@ -1,6 +1,8 @@
 SIP Calculator Dashboard
 A modern, responsive, and interactive SIP (Systematic Investment Plan) Calculator Dashboard built with Flask backend and a sleek frontend that supports dual input (sliders + keyboard). It provides real-time SIP calculations, data visualization using Chart.js, and a classy, user-friendly interface.
 
+Live Demo: https://srivastav-asutosh.github.io/SIP_Calculator/
+
 Features
 Dual input controls: Editable text fields + sliders for amount, years, and expected returns.
 
